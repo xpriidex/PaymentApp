@@ -48,12 +48,4 @@ class NetworkModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): PaymentsApi =
         retrofit.create(PaymentsApi::class.java)
-
-    @Singleton
-    @Provides
-    fun providesPaymentsRemote(paymentsApi: PaymentsApi): PaymentsRemote = PaymentsRemoteImpl(paymentsApi)
-
-    @Singleton
-    @Provides
-    fun providesRepository(remote: PaymentsRemote) = PaymentsRepository(remote)
 }
