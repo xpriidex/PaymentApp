@@ -24,11 +24,7 @@ fun PaymentsTopBar(
         },
         backgroundColor = Color.White,
         navigationIcon = {
-            // navigation icon is use
-            // for drawer icon.
             IconButton(onClick = onBackPress) {
-                // below line is use to
-                // specify navigation icon.
                 Icon(Icons.Filled.ArrowBack, contentDescription = "")
             }
         }

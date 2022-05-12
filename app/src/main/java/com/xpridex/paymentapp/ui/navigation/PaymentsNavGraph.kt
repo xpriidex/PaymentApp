@@ -26,9 +26,11 @@ fun PaymentsNavGraph(
     amountViewModel.apply {
         this.navActions = navActions
     }
+
     val amountIntentHandler = AmountIntentHandler().apply {
         this.viewModel = amountViewModel
     }
+
     AnimatedNavHost(
         navController = navController,
         startDestination = startDestination

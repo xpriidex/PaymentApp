@@ -28,7 +28,7 @@ class AmountViewModel @Inject constructor(
     private val processor: AmountProcessor
 ) : ViewModel(), MviPresentation<AmountUIntent, AmountUiState> {
 
-    val defaultUiState: AmountUiState = AmountUiState.DisplayAmountInputState
+    val defaultUiState: AmountUiState = AmountUiState(isEmpty = false)
     private val uiState = MutableStateFlow(defaultUiState)
 
     var navActions: PaymentsNavActions? = null
@@ -54,11 +54,11 @@ class AmountViewModel @Inject constructor(
     override fun uiStates(): StateFlow<AmountUiState> = uiState
 
 
-     private fun Flow<AmountResult>.checkResultForNav(): Flow<AmountResult> =
-         onEach { result ->
-             when (result) {
-                 NavigateToPaymentMethods -> navActions?.paymentMethods?.invoke()
-                 else -> return@onEach
-             }
-         }
+    private fun Flow<AmountResult>.checkResultForNav(): Flow<AmountResult> =
+        onEach { result ->
+            when (result) {
+                NavigateToPaymentMethods -> navActions?.paymentMethods?.invoke()
+                else -> return@onEach
+            }
+        }
 }

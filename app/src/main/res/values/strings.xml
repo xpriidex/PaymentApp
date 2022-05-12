@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PaymentApp</string>
+    <string name="how_much_do_you_want_to_pay">¿Cuánto quieres pagar?</string>
+    <string name="enter_the_amount_to_pay">Ingresa el monto a pagar</string>
+    <string name="amount_to_pay">Monto a pagar</string>
+    <string name="continue_">Continuar</string>
+    <string name="you_must_add_an_amount">Debes agregar un monto</string>
 </resources>
