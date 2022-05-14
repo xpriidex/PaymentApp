@@ -11,6 +11,8 @@ class PaymentsDataStore @Inject constructor(
     private val dataStoreBuilder: PaymentsDataStoreBuilder
 ) {
     private val amountKey = stringPreferencesKey(AMOUNT)
+    private val paymentMethodKey = stringPreferencesKey(PAYMENT_METHOD)
+    private val bankKey = stringPreferencesKey(BANK)
 
     suspend fun saveAmount(amount: String) {
         with(dataStoreBuilder) {
@@ -35,7 +37,32 @@ class PaymentsDataStore @Inject constructor(
         }
     }
 
+    suspend fun savePaymentMethod(paymentMethod: String) {
+        with(dataStoreBuilder) {
+            getDataStore.edit { preferences ->
+                preferences[paymentMethodKey] = paymentMethod
+            }
+        }
+    }
+
+    fun getPaymentMethod(): Flow<String> = with(dataStoreBuilder) {
+        getDataStore.data.map { preferences ->
+            val paymentMethod = preferences[paymentMethodKey].orEmpty()
+            paymentMethod
+        }
+    }
+
+    suspend fun saveBank(bank: String) {
+        with(dataStoreBuilder) {
+            getDataStore.edit { preferences ->
+                preferences[bankKey] = bank
+            }
+        }
+    }
+
     companion object {
         const val AMOUNT = "amount"
+        const val PAYMENT_METHOD = "payment_method"
+        const val BANK = "bank"
     }
 }

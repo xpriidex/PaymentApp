@@ -1,13 +1,13 @@
-package com.xpridex.paymentapp.presentation.paymentmethod
+package com.xpridex.paymentapp.presentation.bankselector
 
 import androidx.compose.runtime.Immutable
 import com.xpridex.paymentapp.core.mvi.events.MviUiState
-import com.xpridex.paymentapp.domain.model.PaymentMethod
+import com.xpridex.paymentapp.data.remote.model.BankApiModel
 
 @Immutable
-data class PaymentMethodUiState(
+data class BankSelectorUiState(
     val isLoading: Boolean,
     val amount: String,
-    val paymentMethods: List<PaymentMethod>,
+    val banks: List<BankApiModel>,
     val isEmpty: Boolean
 ) : MviUiState

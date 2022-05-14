@@ -16,4 +16,14 @@ internal class PaymentsCacheImpl @Inject constructor(
     }
 
     override fun getAmount(): Flow<String> = dataStore.getAmount().take(1)
+
+    override suspend fun savePaymentMethod(paymentMethod: String) {
+        dataStore.savePaymentMethod(paymentMethod)
+    }
+
+    override fun getPaymentMethod(): Flow<String> = dataStore.getPaymentMethod().take(1)
+
+    override suspend fun saveBank(bank: String) {
+        dataStore.saveBank(bank)
+    }
 }

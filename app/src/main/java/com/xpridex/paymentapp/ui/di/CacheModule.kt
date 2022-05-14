@@ -27,5 +27,4 @@ class CacheModule {
     @Provides
     fun providesPaymentsCache(dataStore: PaymentsDataStore): PaymentsCache =
         PaymentsCacheImpl(dataStore)
-
 }

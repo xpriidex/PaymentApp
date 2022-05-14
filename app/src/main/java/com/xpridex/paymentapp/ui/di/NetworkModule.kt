@@ -1,10 +1,7 @@
 package com.xpridex.paymentapp.ui.di
 
 
-import com.xpridex.paymentapp.data.PaymentsRepository
-import com.xpridex.paymentapp.data.remote.PaymentsRemoteImpl
 import com.xpridex.paymentapp.data.remote.api.PaymentsApi
-import com.xpridex.paymentapp.data.source.PaymentsRemote
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

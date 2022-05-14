@@ -6,4 +6,5 @@
     <string name="continue_">Continuar</string>
     <string name="you_must_add_an_amount">Debes agregar un monto</string>
     <string name="select_payment_method">Selecciona un método de pago</string>
+    <string name="select_bank">Selecciona un banco</string>
 </resources>

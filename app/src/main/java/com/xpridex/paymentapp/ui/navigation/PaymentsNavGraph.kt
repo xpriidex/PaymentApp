@@ -8,8 +8,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.xpridex.paymentapp.presentation.AmountViewModel
+import com.xpridex.paymentapp.presentation.BankSelectorViewModel
 import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
+import com.xpridex.paymentapp.ui.bankselector.BankSelectorIntentHandler
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -43,6 +45,15 @@ fun PaymentsNavGraph(
         this.viewModel = paymentMethodViewModel
     }
 
+    val bankSelectorViewModel = hiltViewModel<BankSelectorViewModel>()
+    bankSelectorViewModel.apply {
+        this.navActions = navActions
+    }
+
+    val bankSelectorIntentHandler = BankSelectorIntentHandler().apply {
+        this.viewModel = bankSelectorViewModel
+    }
+
     AnimatedNavHost(
         navController = navController,
         startDestination = startDestination
@@ -55,6 +66,12 @@ fun PaymentsNavGraph(
             onBack = { navActions.upPress() },
             viewModel = paymentMethodViewModel,
             intentHandler = paymentMethodIntentHandler
+        )
+
+        bankSelectorNav(
+            onBack = { navActions.upPress() },
+            viewModel = bankSelectorViewModel,
+            intentHandler = bankSelectorIntentHandler
         )
         installmentSelectorNav()
     }

@@ -1,4 +1,4 @@
-package com.xpridex.paymentapp.ui.paymentmethod
+package com.xpridex.paymentapp.ui.bankselector
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -28,8 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.xpridex.paymentapp.R
-import com.xpridex.paymentapp.domain.model.PaymentMethod
-import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUiState
+import com.xpridex.paymentapp.data.remote.model.BankApiModel
+import com.xpridex.paymentapp.presentation.bankselector.BankSelectorUiState
 import com.xpridex.paymentapp.ui.component.Loading
 import com.xpridex.paymentapp.ui.component.PaymentsTopBar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,21 +39,21 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @Composable
-internal fun PaymentMethodSelectorScreen(
+internal fun BankSelectorScreen(
     onBackEvent: () -> Unit,
-    selectPaymentEvent: (String) -> Unit,
-    uiState: State<PaymentMethodUiState>
+    selectBankEvent: (String) -> Unit,
+    uiState: State<BankSelectorUiState>
 ) {
     Scaffold(
         topBar = {
             PaymentsTopBar(
-                title = stringResource(id = R.string.select_payment_method),
+                title = stringResource(id = R.string.select_bank),
                 onBackPress = onBackEvent
             )
         },
         content = {
-            PaymentMethodContent(
-                selectPaymentEvent = selectPaymentEvent,
+            BankSelectorContent(
+                selectBankEvent = selectBankEvent,
                 uiState = uiState.value
             )
         })
@@ -61,34 +61,34 @@ internal fun PaymentMethodSelectorScreen(
 
 @ExperimentalMaterialApi
 @Composable
-private fun PaymentMethodContent(
-    selectPaymentEvent: (String) -> Unit,
-    uiState: PaymentMethodUiState
+private fun BankSelectorContent(
+    selectBankEvent: (String) -> Unit,
+    uiState: BankSelectorUiState
 ) {
     if (uiState.isLoading) {
         Loading()
     } else {
-        PaymentMethods(
-            selectPaymentEvent = selectPaymentEvent,
-            paymentMethods = uiState.paymentMethods
+        BanksComponent(
+            selectBankEvent = selectBankEvent,
+            banks = uiState.banks
         )
     }
 }
 
 @ExperimentalMaterialApi
 @Composable
-private fun PaymentMethods(
-    selectPaymentEvent: (String) -> Unit,
-    paymentMethods: List<PaymentMethod>
+private fun BanksComponent(
+    selectBankEvent: (String) -> Unit,
+    banks: List<BankApiModel>
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(paymentMethods) { paymentMethod ->
-            PaymentMethodCard(
-                selectPaymentEvent = selectPaymentEvent,
-                paymentMethod = paymentMethod
+        items(banks) { bank ->
+            BankCard(
+                selectBankEvent = selectBankEvent,
+                bank = bank
             )
         }
 
@@ -100,9 +100,9 @@ private fun PaymentMethods(
 
 @ExperimentalMaterialApi
 @Composable
-fun PaymentMethodCard(
-    selectPaymentEvent: (String) -> Unit,
-    paymentMethod: PaymentMethod
+fun BankCard(
+    selectBankEvent: (String) -> Unit,
+    bank: BankApiModel
 ) {
     Card(
         modifier = Modifier
@@ -112,13 +112,14 @@ fun PaymentMethodCard(
         shape = MaterialTheme.shapes.medium,
         elevation = 5.dp,
         backgroundColor = MaterialTheme.colors.surface,
-        onClick = { selectPaymentEvent.invoke(paymentMethod.id) },
+        onClick = { selectBankEvent.invoke(bank.id.orEmpty()) },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
+
             Image(
-                painter = rememberAsyncImagePainter(paymentMethod.urlImage),
+                painter = rememberAsyncImagePainter( bank.urlImage,),
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
@@ -128,7 +129,7 @@ fun PaymentMethodCard(
 
             Column(Modifier.padding(8.dp)) {
                 Text(
-                    text = paymentMethod.name,
+                    text = bank.name.orEmpty(),
                     style = MaterialTheme.typography.body1,
                     color = MaterialTheme.colors.onSurface,
                 )

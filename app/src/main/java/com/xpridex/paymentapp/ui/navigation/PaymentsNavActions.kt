@@ -12,6 +12,10 @@ class PaymentsNavActions(navHostController: NavHostController) {
         navHostController.navigate(PaymentsRoutes.PaymentMethodSelector.path)
     }
 
+    val bankSelector: () -> Unit = {
+        navHostController.navigate(PaymentsRoutes.BankSelector.path)
+    }
+
     val installment: () -> Unit = {
         navHostController.navigate(PaymentsRoutes.InstallmentSelector.path)
     }

@@ -17,5 +17,4 @@ class RemoteModule {
     @Provides
     fun providesPaymentsRemote(paymentsApi: PaymentsApi): PaymentsRemote =
         PaymentsRemoteImpl(paymentsApi)
-
 }

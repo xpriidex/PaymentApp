@@ -1,7 +1,8 @@
 package com.xpridex.paymentapp.ui.paymentmethod
 
 import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
-import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent
+import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent.InitialUIntent
+import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent.SelectPaymentMethod
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -11,10 +12,10 @@ class PaymentMethodIntentHandler @Inject constructor() {
     var viewModel: PaymentMethodViewModel? = null
 
     fun initialUIntent() {
-        viewModel?.processUserIntents(PaymentMethodUIntent.InitialUIntent)
+        viewModel?.processUserIntents(InitialUIntent)
     }
 
-    fun continueUIntentUIntent() {
-        viewModel?.processUserIntents(PaymentMethodUIntent.ContinueUIntent)
+    fun selectPaymentMethod(paymentMethod: String) {
+        viewModel?.processUserIntents(SelectPaymentMethod(paymentMethod))
     }
 }

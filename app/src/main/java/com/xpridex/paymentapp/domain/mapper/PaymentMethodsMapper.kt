@@ -12,7 +12,6 @@ class PaymentMethodsMapper @Inject constructor() {
     private fun PaymentMethodApiModel.toDomain() = PaymentMethod(
         id = id.orEmpty(),
         name = name.orEmpty(),
-        paymentTypeId = paymentTypeId.orEmpty(),
         urlImage = urlImage.orEmpty()
     )
 }

@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.xpridex.paymentapp.core.mvi.MviPresentation
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodAction
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodAction.GetPaymentMethodsAction
+import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodAction.SavePaymentMethodAction
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodProcessor
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodReducer
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodResult
+import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodResult.SavePaymentMethodResult.NavigateToBankSelector
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent
-import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent.ContinueUIntent
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent.InitialUIntent
+import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUIntent.SelectPaymentMethod
 import com.xpridex.paymentapp.presentation.paymentmethod.PaymentMethodUiState
 import com.xpridex.paymentapp.ui.navigation.PaymentsNavActions
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,8 +54,8 @@ class PaymentMethodViewModel @Inject constructor(
 
     private fun PaymentMethodUIntent.toAction(): PaymentMethodAction {
         return when (this) {
-            is InitialUIntent -> GetPaymentMethodsAction
-            is ContinueUIntent -> GetPaymentMethodsAction
+            InitialUIntent -> GetPaymentMethodsAction
+            is SelectPaymentMethod -> SavePaymentMethodAction(paymentMethod = paymentMethod)
         }
     }
 
@@ -63,7 +65,7 @@ class PaymentMethodViewModel @Inject constructor(
     private fun Flow<PaymentMethodResult>.checkResultForNav(): Flow<PaymentMethodResult> =
         onEach { result ->
             when (result) {
-                // NavigateToPaymentMethods -> navActions?.paymentMethods?.invoke()
+                NavigateToBankSelector -> navActions?.bankSelector?.invoke()
                 else -> return@onEach
             }
         }
