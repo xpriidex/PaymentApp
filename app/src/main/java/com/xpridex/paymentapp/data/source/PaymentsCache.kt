@@ -1,5 +1,6 @@
 package com.xpridex.paymentapp.data.source
 
+import com.xpridex.paymentapp.data.cache.database.model.PaymentEntity
 import kotlinx.coroutines.flow.Flow
 
 interface PaymentsCache {
@@ -8,4 +9,6 @@ interface PaymentsCache {
     suspend fun savePaymentMethod(amount: String)
     fun getPaymentMethod(): Flow<String>
     suspend fun saveBank(bank: String)
+    fun getBank(): Flow<String>
+    suspend fun savePayment(payment: PaymentEntity)
 }

@@ -5,6 +5,7 @@
     <string name="amount_to_pay">Monto a pagar</string>
     <string name="continue_">Continuar</string>
     <string name="you_must_add_an_amount">Debes agregar un monto</string>
-    <string name="select_payment_method">Selecciona un método de pago</string>
-    <string name="select_bank">Selecciona un banco</string>
+    <string name="select_payment_method">Selección de medio de pago</string>
+    <string name="select_bank">Selección de banco</string>
+    <string name="select_installment">Selección de cuotas</string>
 </resources>

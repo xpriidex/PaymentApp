@@ -9,9 +9,11 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.xpridex.paymentapp.presentation.AmountViewModel
 import com.xpridex.paymentapp.presentation.BankSelectorViewModel
+import com.xpridex.paymentapp.presentation.InstallmentSelectorViewModel
 import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
 import com.xpridex.paymentapp.ui.bankselector.BankSelectorIntentHandler
+import com.xpridex.paymentapp.ui.installments.InstallmentSelectorIntentHandler
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -54,6 +56,15 @@ fun PaymentsNavGraph(
         this.viewModel = bankSelectorViewModel
     }
 
+    val installmentSelectorViewModel = hiltViewModel<InstallmentSelectorViewModel>()
+    installmentSelectorViewModel.apply {
+        this.navActions = navActions
+    }
+
+    val installmentSelectorIntentHandler = InstallmentSelectorIntentHandler().apply {
+        this.viewModel = installmentSelectorViewModel
+    }
+
     AnimatedNavHost(
         navController = navController,
         startDestination = startDestination
@@ -63,16 +74,19 @@ fun PaymentsNavGraph(
             intentHandler = amountIntentHandler
         )
         paymentMethodSelectorNav(
-            onBack = { navActions.upPress() },
+            onBackEvent = { navActions.upPress() },
             viewModel = paymentMethodViewModel,
             intentHandler = paymentMethodIntentHandler
         )
 
         bankSelectorNav(
-            onBack = { navActions.upPress() },
+            onBackEvent = { navActions.upPress() },
             viewModel = bankSelectorViewModel,
             intentHandler = bankSelectorIntentHandler
         )
-        installmentSelectorNav()
+        installmentSelectorNav(
+            onBackEvent = { navActions.upPress() },
+            viewModel = installmentSelectorViewModel,
+            intentHandler = installmentSelectorIntentHandler)
     }
 }

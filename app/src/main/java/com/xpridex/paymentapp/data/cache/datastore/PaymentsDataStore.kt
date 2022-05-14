@@ -60,6 +60,14 @@ class PaymentsDataStore @Inject constructor(
         }
     }
 
+    fun getBank(): Flow<String> = with(dataStoreBuilder) {
+        getDataStore.data.map { preferences ->
+            val bank = preferences[bankKey].orEmpty()
+            bank
+        }
+    }
+
+
     companion object {
         const val AMOUNT = "amount"
         const val PAYMENT_METHOD = "payment_method"

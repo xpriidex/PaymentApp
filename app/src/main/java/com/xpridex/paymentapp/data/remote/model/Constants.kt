@@ -8,5 +8,8 @@ internal object Constants {
     const val PAYMENT_METHOD_ID = "payment_method_id"
     const val PUBLIC_KEY = "public_key"
     const val API_KEY = "444a9ef5-8a6b-429f-abdf-587639155d88"
+    const val PAYER_COST = "payer_costs"
+    const val RECOMMENDED_MESSAGE = "recommended_message"
+    const val ISSUER_ID = "issuer.id"
 
 }

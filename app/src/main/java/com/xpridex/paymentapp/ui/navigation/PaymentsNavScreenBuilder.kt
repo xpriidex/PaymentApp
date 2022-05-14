@@ -8,11 +8,13 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.xpridex.paymentapp.presentation.AmountViewModel
 import com.xpridex.paymentapp.presentation.BankSelectorViewModel
+import com.xpridex.paymentapp.presentation.InstallmentSelectorViewModel
 import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
 import com.xpridex.paymentapp.ui.amount.AmountScreen
 import com.xpridex.paymentapp.ui.bankselector.BankSelectorIntentHandler
 import com.xpridex.paymentapp.ui.bankselector.BankSelectorScreen
+import com.xpridex.paymentapp.ui.installments.InstallmentSelectorIntentHandler
 import com.xpridex.paymentapp.ui.installments.InstallmentSelectorScreen
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodSelectorScreen
@@ -42,7 +44,7 @@ internal fun NavGraphBuilder.amountNav(
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 internal fun NavGraphBuilder.paymentMethodSelectorNav(
-    onBack: () -> Unit = {},
+    onBackEvent: () -> Unit = {},
     viewModel: PaymentMethodViewModel,
     intentHandler: PaymentMethodIntentHandler
 ) = composable(
@@ -60,7 +62,7 @@ internal fun NavGraphBuilder.paymentMethodSelectorNav(
     intentHandler.initialUIntent()
 
     PaymentMethodSelectorScreen(
-        onBackEvent = onBack,
+        onBackEvent = onBackEvent,
         selectPaymentEvent = { intentHandler.selectPaymentMethod(it) },
         uiState = paymentMethodUiState
     )
@@ -69,7 +71,7 @@ internal fun NavGraphBuilder.paymentMethodSelectorNav(
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 internal fun NavGraphBuilder.bankSelectorNav(
-    onBack: () -> Unit = {},
+    onBackEvent: () -> Unit = {},
     viewModel: BankSelectorViewModel,
     intentHandler: BankSelectorIntentHandler
 ) = composable(
@@ -87,14 +89,19 @@ internal fun NavGraphBuilder.bankSelectorNav(
     intentHandler.initialUIntent()
 
     BankSelectorScreen(
-        onBackEvent = onBack,
+        onBackEvent = onBackEvent,
         selectBankEvent = { intentHandler.selectBank(it) },
         uiState = bankUiState
     )
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.installmentSelectorNav() = composable(
+internal fun NavGraphBuilder.installmentSelectorNav(
+    onBackEvent: () -> Unit,
+    viewModel: InstallmentSelectorViewModel,
+    intentHandler: InstallmentSelectorIntentHandler
+) = composable(
     route = PaymentsRoutes.InstallmentSelector.path,
     enterTransition = { enterTransition },
     exitTransition = { exitTransition },
@@ -102,6 +109,16 @@ internal fun NavGraphBuilder.installmentSelectorNav() = composable(
     popExitTransition = { popExitTransition }
 ) {
 
-    InstallmentSelectorScreen()
+    val installmentSelectorUiState = remember {
+        viewModel.uiStates()
+    }.collectAsState(initial = viewModel.defaultUiState)
+
+    intentHandler.initialUIntent()
+
+    InstallmentSelectorScreen(
+        onBackEvent = onBackEvent,
+        selectInstallmentEvent = { intentHandler.selectInstallment(it) },
+        uiState = installmentSelectorUiState
+    )
 }
 

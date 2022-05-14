@@ -1,6 +1,8 @@
 package com.xpridex.paymentapp.data
 
+import com.xpridex.paymentapp.data.cache.database.model.PaymentEntity
 import com.xpridex.paymentapp.data.remote.model.BankApiModel
+import com.xpridex.paymentapp.data.remote.model.InstallmentsApiModel
 import com.xpridex.paymentapp.data.remote.model.PaymentMethodApiModel
 import com.xpridex.paymentapp.data.source.PaymentsCache
 import com.xpridex.paymentapp.data.source.PaymentsRemote
@@ -38,5 +40,32 @@ class PaymentsRepository @Inject constructor(
 
     fun saveBank(bank: String) = runBlocking {
         cache.saveBank(bank = bank)
+    }
+
+
+    fun getInstallments(): Flow<List<InstallmentsApiModel>> = flow {
+        cache.getPaymentMethod().collect { paymentMethod ->
+            cache.getBank().collect { bank ->
+                val banks = remote.getInstallments(paymentMethod = paymentMethod, bank = bank)
+                emit(banks)
+            }
+        }
+    }
+
+    fun saveRecommendedMessage(recommendedMessage: String) = runBlocking {
+        cache.getAmount().collect { amount ->
+            cache.getPaymentMethod().collect { paymentMethod ->
+                cache.getBank().collect { bank ->
+
+                    val payment = PaymentEntity(
+                        amount = amount,
+                        paymentMethod = paymentMethod,
+                        bankId = bank,
+                        recommendedMessage = recommendedMessage
+                    )
+                    cache.savePayment(payment)
+                }
+            }
+        }
     }
 }
