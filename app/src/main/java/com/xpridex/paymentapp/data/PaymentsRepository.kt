@@ -3,6 +3,7 @@ package com.xpridex.paymentapp.data
 import com.xpridex.paymentapp.data.remote.model.PaymentMethodApiModel
 import com.xpridex.paymentapp.data.source.PaymentsCache
 import com.xpridex.paymentapp.data.source.PaymentsRemote
+import com.xpridex.paymentapp.domain.GetCreditCardPaymentMethodsUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
@@ -14,11 +15,13 @@ class PaymentsRepository @Inject constructor(
 ) {
 
     fun getPaymentMethods(): Flow<List<PaymentMethodApiModel>> = flow {
-        val debtsTypes = remote.getPaymentMethods()
-        emit(debtsTypes)
+        val paymentMethods = remote.getPaymentMethods()
+        emit(paymentMethods)
     }
 
     fun saveAmount(amount: String) = runBlocking {
         cache.saveAmount(amount = amount)
     }
+
+    fun getAmount(): Flow<String> = cache.getAmount()
 }

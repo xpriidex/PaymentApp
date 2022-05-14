@@ -4,9 +4,11 @@ import com.google.gson.annotations.SerializedName
 import com.xpridex.paymentapp.data.remote.model.Constants.ID
 import com.xpridex.paymentapp.data.remote.model.Constants.NAME
 import com.xpridex.paymentapp.data.remote.model.Constants.PAYMENT_TYPE_ID
+import com.xpridex.paymentapp.data.remote.model.Constants.TUMBNAIL
 
 data class PaymentMethodApiModel(
     @SerializedName(ID) val id: String?,
     @SerializedName(NAME) val name: String?,
-    @SerializedName(PAYMENT_TYPE_ID) val paymentTypeId: String?
+    @SerializedName(PAYMENT_TYPE_ID) val paymentTypeId: String?,
+    @SerializedName(TUMBNAIL) val urlImage: String?
 )

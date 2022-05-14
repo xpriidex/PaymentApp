@@ -31,17 +31,13 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
 internal fun AmountScreen(
-    onBack: () -> Unit = {},
     onContinueEvent: (String) -> Unit,
     uiState: State<AmountUiState>
 ) {
 
     Scaffold(
         topBar = {
-            PaymentsTopBar(
-                title = stringResource(id = R.string.how_much_do_you_want_to_pay),
-                onBackPress = onBack
-            )
+            PaymentsTopBar(title = stringResource(id = R.string.how_much_do_you_want_to_pay))
         },
         content = {
             AmountContent(uiState = uiState.value, onContinueEvent = onContinueEvent)

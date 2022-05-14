@@ -1,17 +1,20 @@
 package com.xpridex.paymentapp.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.xpridex.paymentapp.presentation.AmountViewModel
+import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
+import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
+@ExperimentalMaterialApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ExperimentalAnimationApi
@@ -31,6 +34,15 @@ fun PaymentsNavGraph(
         this.viewModel = amountViewModel
     }
 
+    val paymentMethodViewModel = hiltViewModel<PaymentMethodViewModel>()
+    paymentMethodViewModel.apply {
+        this.navActions = navActions
+    }
+
+    val paymentMethodIntentHandler = PaymentMethodIntentHandler().apply {
+        this.viewModel = paymentMethodViewModel
+    }
+
     AnimatedNavHost(
         navController = navController,
         startDestination = startDestination
@@ -39,7 +51,11 @@ fun PaymentsNavGraph(
             viewModel = amountViewModel,
             intentHandler = amountIntentHandler
         )
-        methodSelectorNav()
+        paymentMethodSelectorNav(
+            onBack = { navActions.upPress() },
+            viewModel = paymentMethodViewModel,
+            intentHandler = paymentMethodIntentHandler
+        )
         installmentSelectorNav()
     }
 }

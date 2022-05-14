@@ -30,3 +30,18 @@ fun PaymentsTopBar(
         }
     )
 }
+
+@Composable
+fun PaymentsTopBar(
+    title: String
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                fontSize = 18.sp
+            )
+        },
+        backgroundColor = Color.White,
+    )
+}

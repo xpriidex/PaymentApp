@@ -11,6 +11,7 @@ internal class PaymentsCacheImpl @Inject constructor(
 ) : PaymentsCache {
 
     override suspend fun saveAmount(amount: String) {
+        dataStore.clear()
         dataStore.saveAmount(amount)
     }
 

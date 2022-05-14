@@ -1,4 +1,4 @@
-package com.xpridex.paymentapp.ui.installmentsselector
+package com.xpridex.paymentapp.ui.installments
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

@@ -27,6 +27,14 @@ class PaymentsDataStore @Inject constructor(
         }
     }
 
+    suspend fun clear() {
+        with(dataStoreBuilder) {
+            getDataStore.edit { preferences ->
+                preferences.clear()
+            }
+        }
+    }
+
     companion object {
         const val AMOUNT = "amount"
     }

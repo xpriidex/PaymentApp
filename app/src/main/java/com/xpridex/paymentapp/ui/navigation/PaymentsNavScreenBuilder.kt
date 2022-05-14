@@ -1,15 +1,18 @@
 package com.xpridex.paymentapp.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.xpridex.paymentapp.presentation.AmountViewModel
+import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
 import com.xpridex.paymentapp.ui.amount.AmountScreen
-import com.xpridex.paymentapp.ui.installmentsselector.InstallmentSelectorScreen
-import com.xpridex.paymentapp.ui.methodselector.MethodSelectorScreen
+import com.xpridex.paymentapp.ui.installments.InstallmentSelectorScreen
+import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
+import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodSelectorScreen
 
 @ExperimentalAnimationApi
 internal fun NavGraphBuilder.amountNav(
@@ -33,8 +36,13 @@ internal fun NavGraphBuilder.amountNav(
     )
 }
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
-internal fun NavGraphBuilder.methodSelectorNav() = composable(
+internal fun NavGraphBuilder.paymentMethodSelectorNav(
+    onBack: () -> Unit = {},
+    viewModel: PaymentMethodViewModel,
+    intentHandler: PaymentMethodIntentHandler
+) = composable(
     route = PaymentsRoutes.PaymentMethodSelector.path,
     enterTransition = { enterTransition },
     exitTransition = { exitTransition },
@@ -42,13 +50,13 @@ internal fun NavGraphBuilder.methodSelectorNav() = composable(
     popExitTransition = { popExitTransition }
 ) {
 
-    //val onboardingUiState = remember {
-    //    viewModel.processUserIntentsAndObserveUiStates(
-    //        userIntents = intentHandler.userIntents()
-    //    )
-    //}.collectAsState(initial = viewModel.defaultUiState)
+    val paymentMethodUiState = remember {
+        viewModel.uiStates()
+    }.collectAsState(initial = viewModel.defaultUiState)
 
-    MethodSelectorScreen()
+    intentHandler.initialUIntent()
+
+    PaymentMethodSelectorScreen(onBack = onBack, uiState = paymentMethodUiState)
 }
 
 @ExperimentalAnimationApi
@@ -59,12 +67,6 @@ internal fun NavGraphBuilder.installmentSelectorNav() = composable(
     popEnterTransition = { popEnterTransition },
     popExitTransition = { popExitTransition }
 ) {
-
-    //val onboardingUiState = remember {
-    //    viewModel.processUserIntentsAndObserveUiStates(
-    //        userIntents = intentHandler.userIntents()
-    //    )
-    //}.collectAsState(initial = viewModel.defaultUiState)
 
     InstallmentSelectorScreen()
 }

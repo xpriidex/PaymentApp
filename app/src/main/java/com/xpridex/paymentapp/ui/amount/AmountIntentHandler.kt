@@ -11,8 +11,6 @@ class AmountIntentHandler @Inject constructor() {
     var viewModel: AmountViewModel? = null
 
     fun continueToMethodSelectorUIntent(amount: String) {
-        viewModel?.let { safeViewModel ->
-            safeViewModel.processUserIntents(ContinueUIntent(amount))
-        }
+        viewModel?.processUserIntents(ContinueUIntent(amount))
     }
 }

@@ -19,8 +19,11 @@ class AmountProcessor @Inject constructor(
         if (amount.isBlank()) {
             emit(SaveAmountResult.Empty)
         } else {
-            repository.saveAmount(amount)
-            emit(SaveAmountResult.NavigateToPaymentMethods)
+            runCatching {
+                repository.saveAmount(amount)
+            }.onSuccess {
+                emit(SaveAmountResult.NavigateToPaymentMethods)
+            }
         }
     }
 }
