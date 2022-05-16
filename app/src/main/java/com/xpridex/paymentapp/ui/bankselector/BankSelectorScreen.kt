@@ -28,8 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.xpridex.paymentapp.R
-import com.xpridex.paymentapp.data.remote.model.BankApiModel
 import com.xpridex.paymentapp.presentation.bankselector.BankSelectorUiState
+import com.xpridex.paymentapp.presentation.bankselector.model.Bank
 import com.xpridex.paymentapp.ui.component.Loading
 import com.xpridex.paymentapp.ui.component.PaymentsTopBar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,7 +41,7 @@ import kotlinx.coroutines.FlowPreview
 @Composable
 internal fun BankSelectorScreen(
     onBackEvent: () -> Unit,
-    selectBankEvent: (String) -> Unit,
+    selectBankEvent: (Bank) -> Unit,
     uiState: State<BankSelectorUiState>
 ) {
     Scaffold(
@@ -62,7 +62,7 @@ internal fun BankSelectorScreen(
 @ExperimentalMaterialApi
 @Composable
 private fun BankSelectorContent(
-    selectBankEvent: (String) -> Unit,
+    selectBankEvent: (Bank) -> Unit,
     uiState: BankSelectorUiState
 ) {
     if (uiState.isLoading) {
@@ -78,8 +78,8 @@ private fun BankSelectorContent(
 @ExperimentalMaterialApi
 @Composable
 private fun BanksComponent(
-    selectBankEvent: (String) -> Unit,
-    banks: List<BankApiModel>
+    selectBankEvent: (Bank) -> Unit,
+    banks: List<Bank>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -101,8 +101,8 @@ private fun BanksComponent(
 @ExperimentalMaterialApi
 @Composable
 fun BankCard(
-    selectBankEvent: (String) -> Unit,
-    bank: BankApiModel
+    selectBankEvent: (Bank) -> Unit,
+    bank: Bank
 ) {
     Card(
         modifier = Modifier
@@ -112,14 +112,14 @@ fun BankCard(
         shape = MaterialTheme.shapes.medium,
         elevation = 5.dp,
         backgroundColor = MaterialTheme.colors.surface,
-        onClick = { selectBankEvent.invoke(bank.id.orEmpty()) },
+        onClick = { selectBankEvent.invoke(bank) },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
             Image(
-                painter = rememberAsyncImagePainter( bank.urlImage,),
+                painter = rememberAsyncImagePainter(bank.urlImage),
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
@@ -129,7 +129,7 @@ fun BankCard(
 
             Column(Modifier.padding(8.dp)) {
                 Text(
-                    text = bank.name.orEmpty(),
+                    text = bank.name,
                     style = MaterialTheme.typography.body1,
                     color = MaterialTheme.colors.onSurface,
                 )

@@ -6,5 +6,6 @@ internal object Constants {
     const val AMOUNT = "amount"
     const val PAYMENT_METHOD = "payment_method"
     const val ISSUER_ID = "issuer_id"
+    const val ISSUER_NAME = "issuer_name"
     const val RECOMMENDED_MESSAGE = "recommended_message"
 }

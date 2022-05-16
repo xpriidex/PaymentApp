@@ -36,15 +36,15 @@ class PaymentsRepository @Inject constructor(
         }
     }
 
-    fun saveBank(bank: String) = runBlocking {
-        cache.saveBank(bank = bank)
+    fun saveBank(id: String, name: String) = runBlocking {
+        cache.saveBank(id = id, name = name)
     }
 
 
     fun getInstallments(): Flow<List<InstallmentsApiModel>> = flow {
         cache.getPaymentMethod().collect { paymentMethod ->
-            cache.getBank().collect { bank ->
-                val banks = remote.getInstallments(paymentMethod = paymentMethod, bank = bank)
+            cache.getBankId().collect { id ->
+                val banks = remote.getInstallments(paymentMethod = paymentMethod, bank = id)
                 emit(banks)
             }
         }
@@ -53,12 +53,13 @@ class PaymentsRepository @Inject constructor(
     fun saveRecommendedMessage(recommendedMessage: String) = runBlocking {
         cache.getAmount().collect { amount ->
             cache.getPaymentMethod().collect { paymentMethod ->
-                cache.getBank().collect { bank ->
+                cache.getBankInfo().collect { bank ->
 
                     val payment = PaymentEntity(
                         amount = amount,
                         paymentMethod = paymentMethod,
-                        bankId = bank,
+                        bankId = bank.id,
+                        bankName = bank.name,
                         recommendedMessage = recommendedMessage
                     )
                     cache.savePayment(payment)

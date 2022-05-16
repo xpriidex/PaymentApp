@@ -1,7 +1,5 @@
 package com.xpridex.paymentapp.ui.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -25,12 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.xpridex.paymentapp.R
-import com.xpridex.paymentapp.data.cache.database.model.PaymentEntity
 import com.xpridex.paymentapp.presentation.home.HomeUiState
+import com.xpridex.paymentapp.presentation.home.model.Payment
 import com.xpridex.paymentapp.ui.component.Loading
 import com.xpridex.paymentapp.ui.component.PaymentsTopBar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -76,7 +72,7 @@ private fun HomeContent(
 @Composable
 private fun HomeComponent(
     onPaymentEvent: () -> Unit,
-    payments: List<PaymentEntity>
+    payments: List<Payment>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -116,9 +112,8 @@ private fun HomeComponent(
 @ExperimentalMaterialApi
 @Composable
 fun PaymentCard(
-    payment: PaymentEntity,
+    payment: Payment,
     modifier: Modifier = Modifier
-
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -169,7 +164,7 @@ fun PaymentCard(
             )
 
             Text(
-                text = payment.bankId,
+                text = payment.bankName,
                 style = MaterialTheme.typography.body1
             )
         }

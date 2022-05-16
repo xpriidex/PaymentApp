@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.xpridex.paymentapp.data.cache.database.model.Constants.AMOUNT
 import com.xpridex.paymentapp.data.cache.database.model.Constants.ISSUER_ID
+import com.xpridex.paymentapp.data.cache.database.model.Constants.ISSUER_NAME
 import com.xpridex.paymentapp.data.cache.database.model.Constants.PAYMENTS
 import com.xpridex.paymentapp.data.cache.database.model.Constants.PAYMENTS_ID
 import com.xpridex.paymentapp.data.cache.database.model.Constants.PAYMENT_METHOD
@@ -21,6 +22,8 @@ import com.xpridex.paymentapp.data.cache.database.model.Constants.RECOMMENDED_ME
     val paymentMethod: String,
     @ColumnInfo(name = ISSUER_ID)
     val bankId: String,
+    @ColumnInfo(name = ISSUER_NAME)
+    val bankName: String,
     @ColumnInfo(name = RECOMMENDED_MESSAGE)
     val recommendedMessage: String
 )

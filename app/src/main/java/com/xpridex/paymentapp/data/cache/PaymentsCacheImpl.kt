@@ -3,6 +3,7 @@ package com.xpridex.paymentapp.data.cache
 import com.xpridex.paymentapp.data.cache.database.dao.PaymentsDao
 import com.xpridex.paymentapp.data.cache.database.model.PaymentEntity
 import com.xpridex.paymentapp.data.cache.datastore.PaymentsDataStore
+import com.xpridex.paymentapp.data.cache.datastore.model.BankInfoCache
 import com.xpridex.paymentapp.data.source.PaymentsCache
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.take
@@ -27,11 +28,13 @@ internal class PaymentsCacheImpl @Inject constructor(
 
     override fun getPaymentMethod(): Flow<String> = dataStore.getPaymentMethod().take(1)
 
-    override suspend fun saveBank(bank: String) {
-        dataStore.saveBank(bank)
+    override suspend fun saveBank(id: String, name: String) {
+        dataStore.saveBank(id = id, name = name)
     }
 
-    override fun getBank(): Flow<String> = dataStore.getBank().take(1)
+    override fun getBankId(): Flow<String> = dataStore.getBankId().take(1)
+
+    override fun getBankInfo(): Flow<BankInfoCache> = dataStore.getBankInfo().take(1)
 
     override suspend fun savePayment(payment: PaymentEntity) {
         paymentsDao.insert(payment)
