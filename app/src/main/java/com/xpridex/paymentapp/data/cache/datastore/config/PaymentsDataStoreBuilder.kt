@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class PaymentsDataStoreBuilder @Inject constructor(context: Context) {
 
-    companion object {
+    private companion object {
         const val NAME = "PaymentsDataStore"
 
         val Context.dataStore: DataStore<Preferences> by preferencesDataStore(

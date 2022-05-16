@@ -20,6 +20,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,6 +30,7 @@ import com.xpridex.paymentapp.R
 import com.xpridex.paymentapp.presentation.installmentselector.InstallmentSelectorUiState
 import com.xpridex.paymentapp.ui.component.Loading
 import com.xpridex.paymentapp.ui.component.PaymentsTopBar
+import com.xpridex.paymentapp.ui.extension.swapList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -77,11 +80,14 @@ private fun InstallmentComponent(
     selectInstallmentEvent: (String) -> Unit,
     recommendedMessages: List<String>
 ) {
+    val recommendedMessageList = remember { mutableStateListOf<String>() }
+    recommendedMessageList.swapList(recommendedMessages)
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(recommendedMessages) { recommendedMessage ->
+        items(recommendedMessageList) { recommendedMessage ->
             InstallmentCard(
                 selectInstallmentEvent = selectInstallmentEvent,
                 recommendedMessage = recommendedMessage

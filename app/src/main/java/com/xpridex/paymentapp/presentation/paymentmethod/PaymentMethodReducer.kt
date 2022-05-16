@@ -12,7 +12,8 @@ class PaymentMethodReducer @Inject constructor() :
         val previousState = this
         return when (result) {
             GetPaymentMethodsResult.InProgress -> previousState.copy(
-                isLoading = true
+                isLoading = true,
+                paymentMethods = emptyList()
             )
             is GetPaymentMethodsResult.Success -> previousState.copy(
                 isLoading = false,

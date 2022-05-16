@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -17,8 +18,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.xpridex.paymentapp.R
@@ -27,6 +31,7 @@ import com.xpridex.paymentapp.ui.component.PaymentsTopBar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
+@ExperimentalComposeUiApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
@@ -48,11 +53,14 @@ internal fun AmountScreen(
         })
 }
 
+@ExperimentalComposeUiApi
 @Composable
 private fun AmountContent(
     onContinueEvent: (String) -> Unit,
     uiState: AmountUiState
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     var amount by remember { mutableStateOf("") }
 
     Column(
@@ -75,7 +83,16 @@ private fun AmountContent(
             },
             maxLines = 1,
             placeholder = { Text(stringResource(id = R.string.amount_to_pay)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+                    onContinueEvent.invoke(amount)
+                }
+            )
         )
 
         Spacer(modifier = Modifier.weight(1f))

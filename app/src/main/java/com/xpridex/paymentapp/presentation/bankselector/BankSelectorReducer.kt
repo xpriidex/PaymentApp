@@ -12,7 +12,8 @@ class BankSelectorReducer @Inject constructor() :
         val previousState = this
         return when (result) {
             GetBanksResult.InProgress -> previousState.copy(
-                isLoading = true
+                isLoading = true,
+                banks = emptyList()
             )
             is GetBanksResult.Success -> previousState.copy(
                 isLoading = false,

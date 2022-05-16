@@ -20,6 +20,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -29,6 +31,7 @@ import com.xpridex.paymentapp.presentation.home.HomeUiState
 import com.xpridex.paymentapp.presentation.home.model.Payment
 import com.xpridex.paymentapp.ui.component.Loading
 import com.xpridex.paymentapp.ui.component.PaymentsTopBar
+import com.xpridex.paymentapp.ui.extension.swapList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -74,6 +77,10 @@ private fun HomeComponent(
     onPaymentEvent: () -> Unit,
     payments: List<Payment>
 ) {
+
+    val paymentList = remember { mutableStateListOf<Payment>() }
+    paymentList.swapList(payments)
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -97,7 +104,7 @@ private fun HomeComponent(
             )
         }
 
-        items(payments) { payment ->
+        items(paymentList) { payment ->
             PaymentCard(
                 payment = payment
             )

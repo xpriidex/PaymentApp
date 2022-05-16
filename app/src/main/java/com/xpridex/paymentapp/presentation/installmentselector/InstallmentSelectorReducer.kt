@@ -11,7 +11,8 @@ class InstallmentSelectorReducer @Inject constructor() :
         val previousState = this
         return when (result) {
             GetInstallmentsResult.InProgress -> previousState.copy(
-                isLoading = true
+                isLoading = true,
+                recommendedMessages = emptyList()
             )
             is GetInstallmentsResult.Success -> previousState.copy(
                 isLoading = false,

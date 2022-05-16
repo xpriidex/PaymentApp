@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.xpridex.paymentapp.presentation.AmountViewModel
@@ -48,6 +49,7 @@ internal fun NavGraphBuilder.homeNav(
     )
 }
 
+@ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 internal fun NavGraphBuilder.amountNav(
     onBackEvent: () -> Unit = {},

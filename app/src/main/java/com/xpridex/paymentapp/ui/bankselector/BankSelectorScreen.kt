@@ -1,6 +1,5 @@
 package com.xpridex.paymentapp.ui.bankselector
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,17 +20,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.xpridex.paymentapp.R
 import com.xpridex.paymentapp.presentation.bankselector.BankSelectorUiState
 import com.xpridex.paymentapp.presentation.bankselector.model.Bank
 import com.xpridex.paymentapp.ui.component.Loading
 import com.xpridex.paymentapp.ui.component.PaymentsTopBar
+import com.xpridex.paymentapp.ui.extension.swapList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -81,11 +85,14 @@ private fun BanksComponent(
     selectBankEvent: (Bank) -> Unit,
     banks: List<Bank>
 ) {
+    val bankList = remember { mutableStateListOf<Bank>() }
+    bankList.swapList(banks)
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(banks) { bank ->
+        items(bankList) { bank ->
             BankCard(
                 selectBankEvent = selectBankEvent,
                 bank = bank
@@ -118,13 +125,16 @@ fun BankCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            Image(
-                painter = rememberAsyncImagePainter(bank.urlImage),
-                contentDescription = null,
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(bank.urlImage)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Bank image",
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(80.dp)
-                    .padding(8.dp),
-                contentScale = ContentScale.Fit,
+                    .padding(8.dp)
             )
 
             Column(Modifier.padding(8.dp)) {
