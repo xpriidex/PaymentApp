@@ -21,6 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -81,11 +83,13 @@ private fun PaymentMethods(
     selectPaymentEvent: (String) -> Unit,
     paymentMethods: List<PaymentMethod>
 ) {
+    val paymentMethodsRemember = remember { mutableStateOf(paymentMethods) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(paymentMethods) { paymentMethod ->
+        items(paymentMethodsRemember.value) { paymentMethod ->
             PaymentMethodCard(
                 selectPaymentEvent = selectPaymentEvent,
                 paymentMethod = paymentMethod

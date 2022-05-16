@@ -36,4 +36,7 @@ internal class PaymentsCacheImpl @Inject constructor(
     override suspend fun savePayment(payment: PaymentEntity) {
         paymentsDao.insert(payment)
     }
+
+    override suspend fun getPayments(): List<PaymentEntity> =
+        paymentsDao.getAll()
 }

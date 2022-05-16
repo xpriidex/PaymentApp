@@ -8,4 +8,5 @@
     <string name="select_payment_method">Selección de medio de pago</string>
     <string name="select_bank">Selección de banco</string>
     <string name="select_installment">Selección de cuotas</string>
+    <string name="Payments">Pagos</string>
 </resources>

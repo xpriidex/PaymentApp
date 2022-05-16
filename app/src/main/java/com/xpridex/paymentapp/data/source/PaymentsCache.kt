@@ -11,4 +11,5 @@ interface PaymentsCache {
     suspend fun saveBank(bank: String)
     fun getBank(): Flow<String>
     suspend fun savePayment(payment: PaymentEntity)
+    suspend fun getPayments(): List<PaymentEntity>
 }

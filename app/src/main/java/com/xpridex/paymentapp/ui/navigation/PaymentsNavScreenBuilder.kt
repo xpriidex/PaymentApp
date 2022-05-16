@@ -8,19 +8,49 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.xpridex.paymentapp.presentation.AmountViewModel
 import com.xpridex.paymentapp.presentation.BankSelectorViewModel
+import com.xpridex.paymentapp.presentation.HomeViewModel
 import com.xpridex.paymentapp.presentation.InstallmentSelectorViewModel
 import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
 import com.xpridex.paymentapp.ui.amount.AmountScreen
 import com.xpridex.paymentapp.ui.bankselector.BankSelectorIntentHandler
 import com.xpridex.paymentapp.ui.bankselector.BankSelectorScreen
+import com.xpridex.paymentapp.ui.home.HomeIntentHandler
+import com.xpridex.paymentapp.ui.home.HomeScreen
 import com.xpridex.paymentapp.ui.installments.InstallmentSelectorIntentHandler
 import com.xpridex.paymentapp.ui.installments.InstallmentSelectorScreen
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodSelectorScreen
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+internal fun NavGraphBuilder.homeNav(
+    onPaymentEvent: () -> Unit,
+    viewModel: HomeViewModel,
+    intentHandler: HomeIntentHandler,
+) = composable(
+    route = PaymentsRoutes.Home.path,
+    enterTransition = { enterTransition },
+    exitTransition = { exitTransition },
+    popEnterTransition = { popEnterTransition },
+    popExitTransition = { popExitTransition }
+) {
+
+    val homeUiState = remember {
+        viewModel.uiStates()
+    }.collectAsState(initial = viewModel.defaultUiState)
+
+    intentHandler.initialUIntent()
+
+    HomeScreen(
+        onPaymentEvent = onPaymentEvent,
+        uiState = homeUiState
+    )
+}
+
 @ExperimentalAnimationApi
 internal fun NavGraphBuilder.amountNav(
+    onBackEvent: () -> Unit = {},
     viewModel: AmountViewModel,
     intentHandler: AmountIntentHandler
 ) = composable(
@@ -36,6 +66,7 @@ internal fun NavGraphBuilder.amountNav(
     }.collectAsState(initial = viewModel.defaultUiState)
 
     AmountScreen(
+        onBackEvent = onBackEvent,
         onContinueEvent = { intentHandler.continueToMethodSelectorUIntent(it) },
         uiState = amountUiState
     )

@@ -9,10 +9,12 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.xpridex.paymentapp.presentation.AmountViewModel
 import com.xpridex.paymentapp.presentation.BankSelectorViewModel
+import com.xpridex.paymentapp.presentation.HomeViewModel
 import com.xpridex.paymentapp.presentation.InstallmentSelectorViewModel
 import com.xpridex.paymentapp.presentation.PaymentMethodViewModel
 import com.xpridex.paymentapp.ui.amount.AmountIntentHandler
 import com.xpridex.paymentapp.ui.bankselector.BankSelectorIntentHandler
+import com.xpridex.paymentapp.ui.home.HomeIntentHandler
 import com.xpridex.paymentapp.ui.installments.InstallmentSelectorIntentHandler
 import com.xpridex.paymentapp.ui.paymentmethod.PaymentMethodIntentHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +26,7 @@ import kotlinx.coroutines.FlowPreview
 @ExperimentalAnimationApi
 @Composable
 fun PaymentsNavGraph(
-    startDestination: String = PaymentsRoutes.Amount.path
+    startDestination: String = PaymentsRoutes.Home.path
 ) {
     val navController = rememberAnimatedNavController()
     val navActions = remember(navController) { PaymentsNavActions(navController) }
@@ -65,11 +67,24 @@ fun PaymentsNavGraph(
         this.viewModel = installmentSelectorViewModel
     }
 
+    val homeViewModel = hiltViewModel<HomeViewModel>()
+
+    val homeIntentHandler = HomeIntentHandler().apply {
+        this.viewModel = homeViewModel
+    }
+
     AnimatedNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+        homeNav(
+            onPaymentEvent = { navActions.amount() },
+            viewModel = homeViewModel,
+            intentHandler = homeIntentHandler
+        )
+
         amountNav(
+            onBackEvent = { navActions.upPress() },
             viewModel = amountViewModel,
             intentHandler = amountIntentHandler
         )
@@ -87,6 +102,7 @@ fun PaymentsNavGraph(
         installmentSelectorNav(
             onBackEvent = { navActions.upPress() },
             viewModel = installmentSelectorViewModel,
-            intentHandler = installmentSelectorIntentHandler)
+            intentHandler = installmentSelectorIntentHandler
+        )
     }
 }

@@ -21,7 +21,7 @@ class PaymentsNavActions(navHostController: NavHostController) {
     }
 
     val home: () -> Unit = {
-        navHostController.navigate(PaymentsRoutes.Amount.path)
+        navHostController.navigate(PaymentsRoutes.Home.path)
     }
 
     val upPress: () -> Unit = {

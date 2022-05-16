@@ -8,11 +8,11 @@ import com.xpridex.paymentapp.data.cache.database.model.Constants.PAYMENTS
 import com.xpridex.paymentapp.data.cache.database.model.PaymentEntity
 
 @Dao
- interface PaymentsDao {
+interface PaymentsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(paymentEntity: PaymentEntity)
 
-    @Query("SELECT * FROM $PAYMENTS")
+    @Query("SELECT * FROM $PAYMENTS ORDER BY PAYMENTS_ID DESC")
     suspend fun getAll(): List<PaymentEntity>
 
 }

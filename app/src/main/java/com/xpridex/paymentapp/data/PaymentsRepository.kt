@@ -25,8 +25,6 @@ class PaymentsRepository @Inject constructor(
         cache.saveAmount(amount = amount)
     }
 
-    fun getAmount(): Flow<String> = cache.getAmount()
-
     fun savePaymentMethod(paymentMethod: String) = runBlocking {
         cache.savePaymentMethod(amount = paymentMethod)
     }
@@ -67,5 +65,10 @@ class PaymentsRepository @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getPayments(): Flow<List<PaymentEntity>> = flow {
+        val payments = cache.getPayments()
+        emit(payments)
     }
 }
