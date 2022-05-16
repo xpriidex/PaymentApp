@@ -129,7 +129,7 @@ fun PaymentMethodCard(
                     .data(paymentMethod.urlImage)
                     .crossfade(true)
                     .build(),
-                contentDescription = "Payment Method image",
+                contentDescription = stringResource(id = R.string.payment_method_image),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(80.dp)
@@ -149,7 +149,7 @@ fun PaymentMethodCard(
             Icon(
                 modifier = Modifier.padding(end = 10.dp),
                 imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.chevron_right_icon)
             )
         }
     }

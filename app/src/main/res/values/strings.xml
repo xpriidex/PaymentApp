@@ -9,4 +9,8 @@
     <string name="select_bank">Selección de banco</string>
     <string name="select_installment">Selección de cuotas</string>
     <string name="Payments">Pagos</string>
+    <string name="chevron_right_icon">chevron right icon</string>
+    <string name="bank_image">Bank image</string>
+    <string name="payment_method_image">Payment Method image</string>
+    <string name="back_icon">Back icon</string>
 </resources>

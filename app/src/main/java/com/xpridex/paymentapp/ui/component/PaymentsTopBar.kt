@@ -8,7 +8,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import com.xpridex.paymentapp.R
 
 @Composable
 fun PaymentsTopBar(
@@ -25,7 +27,10 @@ fun PaymentsTopBar(
         backgroundColor = Color.White,
         navigationIcon = {
             IconButton(onClick = onBackPress) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "")
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(id = R.string.back_icon)
+                )
             }
         }
     )

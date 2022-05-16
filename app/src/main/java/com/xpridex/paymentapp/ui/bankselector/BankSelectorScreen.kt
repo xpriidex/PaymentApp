@@ -130,7 +130,7 @@ fun BankCard(
                     .data(bank.urlImage)
                     .crossfade(true)
                     .build(),
-                contentDescription = "Bank image",
+                contentDescription = stringResource(id = R.string.bank_image),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(80.dp)
@@ -150,7 +150,7 @@ fun BankCard(
             Icon(
                 modifier = Modifier.padding(end = 10.dp),
                 imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.chevron_right_icon)
             )
         }
     }

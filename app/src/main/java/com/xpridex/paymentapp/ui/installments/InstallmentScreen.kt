@@ -133,7 +133,7 @@ fun InstallmentCard(
             Icon(
                 modifier = Modifier.padding(end = 10.dp),
                 imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.chevron_right_icon)
             )
         }
     }
