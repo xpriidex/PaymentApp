@@ -38,10 +38,10 @@ internal fun NavGraphBuilder.homeNav(
 ) {
 
     val homeUiState = remember {
+        intentHandler.initialUIntent()
         viewModel.uiStates()
     }.collectAsState(initial = viewModel.defaultUiState)
 
-    intentHandler.initialUIntent()
 
     HomeScreen(
         onPaymentEvent = onPaymentEvent,
@@ -89,10 +89,10 @@ internal fun NavGraphBuilder.paymentMethodSelectorNav(
 ) {
 
     val paymentMethodUiState = remember {
+        intentHandler.initialUIntent()
         viewModel.uiStates()
     }.collectAsState(initial = viewModel.defaultUiState)
 
-    intentHandler.initialUIntent()
 
     PaymentMethodSelectorScreen(
         onBackEvent = onBackEvent,
@@ -116,10 +116,10 @@ internal fun NavGraphBuilder.bankSelectorNav(
 ) {
 
     val bankUiState = remember {
+        intentHandler.initialUIntent()
         viewModel.uiStates()
     }.collectAsState(initial = viewModel.defaultUiState)
 
-    intentHandler.initialUIntent()
 
     BankSelectorScreen(
         onBackEvent = onBackEvent,
@@ -143,10 +143,10 @@ internal fun NavGraphBuilder.installmentSelectorNav(
 ) {
 
     val installmentSelectorUiState = remember {
+        intentHandler.initialUIntent()
         viewModel.uiStates()
     }.collectAsState(initial = viewModel.defaultUiState)
 
-    intentHandler.initialUIntent()
 
     InstallmentSelectorScreen(
         onBackEvent = onBackEvent,

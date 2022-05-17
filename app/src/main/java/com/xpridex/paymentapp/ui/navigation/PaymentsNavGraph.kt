@@ -90,6 +90,7 @@ fun PaymentsNavGraph(
             viewModel = amountViewModel,
             intentHandler = amountIntentHandler
         )
+
         paymentMethodSelectorNav(
             onBackEvent = { navActions.upPress() },
             viewModel = paymentMethodViewModel,

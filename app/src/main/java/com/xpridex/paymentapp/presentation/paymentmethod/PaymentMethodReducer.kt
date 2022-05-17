@@ -15,10 +15,12 @@ class PaymentMethodReducer @Inject constructor() :
                 isLoading = true,
                 paymentMethods = emptyList()
             )
-            is GetPaymentMethodsResult.Success -> previousState.copy(
+            is GetPaymentMethodsResult.Success -> {
+                println("**** GetPaymentMethodsResult: Success")
+                previousState.copy(
                 isLoading = false,
                 paymentMethods = result.paymentMethods
-            )
+            )}
             GetPaymentMethodsResult.Empty -> previousState.copy(isEmpty = true)
             GetPaymentMethodsResult.Error -> previousState.copy(isEmpty = true)
             is SavePaymentMethodResult.NavigateToBankSelector -> previousState

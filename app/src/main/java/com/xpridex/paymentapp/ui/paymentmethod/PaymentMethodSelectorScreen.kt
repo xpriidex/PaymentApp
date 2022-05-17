@@ -69,6 +69,8 @@ private fun PaymentMethodContent(
     selectPaymentEvent: (String) -> Unit,
     uiState: PaymentMethodUiState
 ) {
+    println("**** New uiState: $uiState")
+
     if (uiState.isLoading) {
         Loading()
     } else {
