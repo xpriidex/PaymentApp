@@ -2,7 +2,6 @@ package com.xpridex.paymentapp.presentation.bankselector
 
 import com.xpridex.paymentapp.core.execution.ExecutionThread
 import com.xpridex.paymentapp.data.PaymentsRepository
-import com.xpridex.paymentapp.data.remote.model.BankApiModel
 import com.xpridex.paymentapp.presentation.bankselector.BankSelectorAction.GetBanksAction
 import com.xpridex.paymentapp.presentation.bankselector.BankSelectorAction.SaveBankAction
 import com.xpridex.paymentapp.presentation.bankselector.BankSelectorResult.GetBanksResult

@@ -1,7 +1,6 @@
 package com.xpridex.paymentapp.presentation.bankselector
 
 import com.xpridex.paymentapp.core.mvi.events.MviResult
-import com.xpridex.paymentapp.data.remote.model.BankApiModel
 import com.xpridex.paymentapp.presentation.bankselector.model.Bank
 
 sealed class BankSelectorResult : MviResult {

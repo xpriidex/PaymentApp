@@ -1,7 +1,6 @@
 package com.xpridex.paymentapp.presentation.installmentselector
 
 import com.xpridex.paymentapp.core.execution.ExecutionThread
-import com.xpridex.paymentapp.data.PaymentsRepository
 import com.xpridex.paymentapp.domain.GetRecommendedMessagesUseCase
 import com.xpridex.paymentapp.domain.SaveRecommendedMessageUseCase
 import com.xpridex.paymentapp.presentation.installmentselector.InstallmentSelectorResult.GetInstallmentsResult

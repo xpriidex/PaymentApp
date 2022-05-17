@@ -1,8 +1,6 @@
 package com.xpridex.paymentapp.presentation.installmentselector
 
 import com.xpridex.paymentapp.core.mvi.events.MviResult
-import com.xpridex.paymentapp.data.remote.model.BankApiModel
-import com.xpridex.paymentapp.data.remote.model.PayerCostApiModel
 
 sealed class InstallmentSelectorResult : MviResult {
 

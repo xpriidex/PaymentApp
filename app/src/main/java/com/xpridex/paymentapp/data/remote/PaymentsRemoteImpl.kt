@@ -3,7 +3,6 @@ package com.xpridex.paymentapp.data.remote
 import com.xpridex.paymentapp.data.remote.api.PaymentsApi
 import com.xpridex.paymentapp.data.remote.model.BankApiModel
 import com.xpridex.paymentapp.data.remote.model.InstallmentsApiModel
-import com.xpridex.paymentapp.data.remote.model.PayerCostApiModel
 import com.xpridex.paymentapp.data.remote.model.PaymentMethodApiModel
 import com.xpridex.paymentapp.data.source.PaymentsRemote
 import javax.inject.Inject
