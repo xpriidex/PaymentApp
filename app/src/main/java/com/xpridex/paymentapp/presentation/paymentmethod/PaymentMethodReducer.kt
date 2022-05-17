@@ -16,7 +16,6 @@ class PaymentMethodReducer @Inject constructor() :
                 paymentMethods = emptyList()
             )
             is GetPaymentMethodsResult.Success -> {
-                println("**** GetPaymentMethodsResult: Success")
                 previousState.copy(
                 isLoading = false,
                 paymentMethods = result.paymentMethods

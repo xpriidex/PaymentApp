@@ -47,16 +47,12 @@ class PaymentMethodViewModel @Inject constructor(
                 with(reducer) { previousUiState reduceWith result }
             }
             .onEach { uiState ->
-                println("**** ViewModel : $uiState ")
-
                 this.uiState.value = uiState
             }
             .launchIn(viewModelScope)
     }
 
     private fun PaymentMethodUIntent.toAction(): PaymentMethodAction {
-        println("**** New UIntent: ${this}")
-
         return when (this) {
             InitialUIntent -> GetPaymentMethodsAction
             is SelectPaymentMethod -> SavePaymentMethodAction(paymentMethod = paymentMethod)

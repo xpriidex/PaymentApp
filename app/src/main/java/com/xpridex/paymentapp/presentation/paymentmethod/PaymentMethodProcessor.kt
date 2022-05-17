@@ -27,7 +27,6 @@ class PaymentMethodProcessor @Inject constructor(
         }
 
     private fun getPaymentMethodsProcessor() = getCreditCardPaymentMethodsUseCase.invoke().map {
-        println("**** GetPaymentMethodsResultSuccess")
         GetPaymentMethodsResult.Success(it) as PaymentMethodResult
     }.onStart {
         emit(GetPaymentMethodsResult.InProgress)
